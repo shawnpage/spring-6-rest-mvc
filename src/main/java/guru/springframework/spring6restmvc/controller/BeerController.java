@@ -20,6 +20,12 @@ public class BeerController {
 
     private final BeerService beerService;
 
+    @DeleteMapping("/{beerId}")
+    public ResponseEntity<String> deleteBeer(@PathVariable("beerId") UUID beerId) {
+        beerService.deleteById(beerId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    
     @PutMapping("/{beerId}")
     public  ResponseEntity<String> updateBeer(@PathVariable("beerId") UUID beerId,
                                               @RequestBody Beer beer) {
@@ -41,12 +47,12 @@ public class BeerController {
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public List<Beer> listBeers() {
         return beerService.listBeers();
     }
 
-    @RequestMapping(value = "/{beerId}", method = RequestMethod.GET)
+    @GetMapping(value = "/{beerId}")
     public Beer getBeerById(@PathVariable("beerId") UUID beerId) {
 
         log.debug("Get Beer by Id - in controller. Id: " +  beerId.toString());
