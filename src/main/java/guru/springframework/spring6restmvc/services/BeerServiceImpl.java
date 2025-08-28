@@ -83,7 +83,6 @@ public class BeerServiceImpl implements BeerService {
                 .updateDate(LocalDateTime.now())
                 .beerName(beer.getBeerName())
                 .beerStyle(beer.getBeerStyle())
-                .beerStyle(beer.getBeerStyle())
                 .quantityOnHand(beer.getQuantityOnHand())
                 .upc(beer.getUpc())
                 .price(beer.getPrice())
@@ -96,32 +95,22 @@ public class BeerServiceImpl implements BeerService {
 
     @Override
     public void updateBeerById(UUID beerId, Beer beer) {
-
-
-
         Beer existingBeer = beerMap.get(beerId);
-        /*
-        existingBeer.setBeerName(beer.getBeerName());
-        existingBeer.setPrice(beer.getPrice());
-        existingBeer.setUpc(beer.getUpc());
-        existingBeer.setQuantityOnHand(beer.getQuantityOnHand());
-
-        beerMap.put(existingBeer.getId(), existingBeer);
-
-         */
 
         if (existingBeer != null) {
             Beer updatedBeer = Beer.builder()
                     .id(beerId)
                     .version(beer.getVersion())
+                    .createdDate(existingBeer.getCreatedDate())
+                    .updateDate(LocalDateTime.now())
                     .beerName(beer.getBeerName())
                     .beerStyle(beer.getBeerStyle())
+                    .quantityOnHand(beer.getQuantityOnHand())
                     .upc(beer.getUpc())
                     .price(beer.getPrice())
-                    .quantityOnHand(beer.getQuantityOnHand())
                     .build();
-            beerMap.put(beerId, updatedBeer);
-            }
 
+            beerMap.put(beerId, updatedBeer);
+        }
     }
 }
